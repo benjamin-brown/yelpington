@@ -1,11 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="new-moon-style.css"> -->
+</head>
+<body>
+  
+<div id="name"></div>
+<div id="address"></div>
+<div id="phone"></div>
+<div id="hours"></div>
+<div id="note"></div>
+<div id="map">
+  <iframe src="https://www.openstreetmap.org/#map=19/44.47964/-73.21250" frameborder="0"></iframe>
+</div>
+
 <script>
+  let data
+  let params = new URLSearchParams(document.location.search.slice(1));
+  let name = params.get("name");
 
-fetch('city-market.md')
-  .then(function(response) {
-    return response.text();
+//fetch().then().then()
+
+fetch('new-moon.json')
+ 
+ .then(function(response) {
+
+    return response.json();
+  
   })
-  .then(function(myText) {
-    console.log(myText);
-  });
+  .then(function(newMoonObject) {
+  
+    console.log(newMoonObject);
+  
+    // data = JSON.parse(newMoonObject)
 
-</script>
+    document.getElementById('name').innerHTML = newMoonObject.name
+    document.getElementById('address').innerHTML = newMoonObject.address
+    //document.getElementById('phone').innerHTML = newMoonObject.phone
+    document.getElementById('phone').innerHTML = newMoonObject['phone number']
+    document.getElementById('hours').innerHTML = newMoonObject.hours
+    document.getElementById('note').innerHTML = newMoonObject.notes
+});
+  </script>  
+
+</body>
+</html>
+
+
