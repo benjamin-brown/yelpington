@@ -29,7 +29,9 @@ fetch('new-moon.json')
  
  .then(function(response) {
 
-    return response.json();
+    let parsedResponse = response.json()
+
+    return parsedResponse;
   
   })
   .then(function(newMoonObject) {
@@ -40,13 +42,37 @@ fetch('new-moon.json')
 
     document.getElementById('name').innerHTML = newMoonObject.name
     document.getElementById('address').innerHTML = newMoonObject.address
-    //document.getElementById('phone').innerHTML = newMoonObject.phone
     document.getElementById('phone').innerHTML = newMoonObject['phone number']
     document.getElementById('hours').innerHTML = newMoonObject.hours
     document.getElementById('note').innerHTML = newMoonObject.notes
+    
+    //figure out how to make a url that works with the nominatim api
+    //https://nominatim.openstreetmap.org/search.php?q=150+cherry+street+burlington%2C+vt&polygon_geojson=1&viewbox=
+    
+    //make fetch request to return json from the api (fetch().then().then())
+    
+    let url="https://nominatim.openstreetmap.org/search/?q=" + newMoonObject.address + "&format=json"
+
+    fetch(url).then(function(response) {
+
+      let apiResponse = response.json()
+      
+      return apiResponse
+
+    }).then(function(payload){
+    // when i get a response from the api, figure out how to pull the boundingbox value from object
+      console.log(payload)
+    })  
+
+
+  
+        // use chrome dev tools to freeze the script in place and inspect the object returned from nominatim
+    // figure out how to make a url that works with the openstreetmap iframe embed
+    // using values from boundingbox, construct a new url 
+    // set iframe.src to be the url for openstreetmaps
+
 });
   </script>  
-
 </body>
 </html>
 
